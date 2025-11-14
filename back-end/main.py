@@ -27,3 +27,14 @@ def listar_produtos():
         })
     
     return {"produtos": lista}
+
+
+@app.put("/produtos/{id_produto}")
+def atualizar_produtos(id_produto: int, novo_preco: float, nova_quantidade: int):
+    produto = function.buscar_produto(id_produto)
+
+    if produto:
+        function.atualizar_produto(id_produto, novo_preco, nova_quantidade)
+        return {"mensagem": "Produto atualizado com sucesso!"}
+    else:
+        return {"erro": "Produto não encontrado"}
