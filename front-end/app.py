@@ -10,3 +10,19 @@ menu = st.sidebar.selectbox(
     "Menu",
     ["Listar Produtos", "Cadastrar Produto", "Atualizar Produto", "Deletar Produto"]
 )
+
+
+if menu == "Listar Produtos":
+    st.subheader("Estoque ☑ ")
+
+    response = requests.get(f"{API_URL}/produtos")
+
+    if response.status_code == 200:
+        produtos = response.json().get("produtos", [])
+
+        if produtos:
+            st.dataframe(produtos)
+        else:
+            st.info("Nenhum produto cadastrado ainda!, Tente Novamente !")
+    else:
+        st.error("Erro ao conectar com a API.")
